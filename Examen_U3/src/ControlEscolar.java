@@ -80,8 +80,9 @@ public class ControlEscolar extends JFrame {
 		setContentPane(contentPane);
 	//	inicioSesion();
 	//	menuPrincipal();
-		editarAlumno();
+	//	editarAlumno();
 	//	consultarAlumno();
+		perfil();
 	}
 	
 	public void menu() { // Inicio - Cerrar Sesion
@@ -130,14 +131,29 @@ public class ControlEscolar extends JFrame {
         	}
         });
 		menu.add(item2);		
+		
+		JMenuItem item3 = new JMenuItem("Mi perfil");
+		item3.setHorizontalAlignment(SwingConstants.CENTER);
+		item3.setOpaque(false);
+		item3.addActionListener(new ActionListener()
+		{
+        	public void actionPerformed(ActionEvent e) {
+        		contentPane.removeAll();
+		        contentPane.revalidate();
+		        contentPane.repaint();
+		        perfil();
+        	}
+        });
+		menu.add(item3);
 	}
+
 	
 	public void inicioSesion() 
 	{
 		menuI_R_A();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(panelMenu, BorderLayout.NORTH);	
-
+		
 		panel = new JPanel();      
 		panel.setLayout(null);
 		panel.setBackground(new Color(82, 24, 37));
@@ -236,7 +252,8 @@ public class ControlEscolar extends JFrame {
         }	
 		});
 		panel.add(btnNoticias);
-		elementos();		
+		elementos();	
+		imagenes();
 	}
 	
 	public void menuI_R_A() { //Menu inicio, recuperar, acceder
@@ -650,6 +667,7 @@ public class ControlEscolar extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 	}
 	
+	
 	public void elementosV2()	{
 		
 		JLabel labelEscuela = new JLabel("Colegio Hogwarts de Magia y Hechiceria");
@@ -1032,8 +1050,6 @@ public class ControlEscolar extends JFrame {
 		labelGrisV2.setBounds(58, 150, 750, 550);
 		panel.add(labelGrisV2);
 	}
-
-	
 	
 	public void consultarAlumno() {
 	//	menu();
@@ -1328,6 +1344,90 @@ public class ControlEscolar extends JFrame {
 		elementosV2();
 	}
 	
+	public void perfil()
+	{
+		menu();
+		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.add(panelMenu, BorderLayout.NORTH);
+
+		panel = new JPanel();      
+		panel.setLayout(null);
+		panel.setBackground(new Color(82, 24, 37));
+		contentPane.add(panel, BorderLayout.CENTER);
+		
+		JLabel lblDetallesDeUsuario = new JLabel("Detalles de usuario:");
+		lblDetallesDeUsuario.setForeground(Color.BLACK);
+		lblDetallesDeUsuario.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblDetallesDeUsuario.setBounds(225, 316, 460, 30);
+		panel.add(lblDetallesDeUsuario);
+		
+		JLabel logoHog = new JLabel();
+		logoHog.setIcon(new ImageIcon(getClass().getResource("sombrero.png")));
+		logoHog.setBounds(443,176,110,130);
+	    panel.add(logoHog);
+		
+		JLabel lblInstrucciones = new JLabel("Usuario: Yo");
+	    lblInstrucciones.setForeground(Color.black);
+	    lblInstrucciones.setFont(new Font("Tahoma", Font.BOLD, 20));
+	    lblInstrucciones.setBounds(311, 176, 122, 30);
+	    panel.add(lblInstrucciones);
+
+	    JTextArea txtDatos = new JTextArea();
+	    txtDatos.setWrapStyleWord(true);
+	    txtDatos.setFocusable(false);
+	    txtDatos.setForeground(new Color(130, 36, 55));
+	    txtDatos.setFont(new Font("Tahoma", Font.PLAIN,19));
+	    txtDatos.setLineWrap(true);
+	    txtDatos.setBounds(283, 345, 243, 180);
+	    txtDatos.setText("Nombre: \nCorreo electrónico:\nTeléfono: \n" +
+	                     "País: \n" +
+	                     "Ocupación:\n\nProximos eventos: ");
+	    txtDatos.setOpaque(false);
+	    txtDatos.setEditable(false);
+	    panel.add(txtDatos);
+	    
+	    
+	    JTextArea txtRes = new JTextArea();
+	    txtRes.setWrapStyleWord(true);
+	    txtRes.setFocusable(false);
+	    txtRes.setForeground(Color.black);
+	    txtRes.setFont(new Font("Tahoma", Font.PLAIN, 19));
+	    txtRes.setLineWrap(true);
+	    txtRes.setBounds(499, 345, 262, 180);
+	    txtRes.setText("Yo\n"+ "yo@wizardingworld.com \n9809809800\n" +
+	                     "México\n" +
+	                     "Administrador\n\nCeremonia de Selección");
+	    txtRes.setOpaque(false);
+	    txtRes.setEditable(false);
+	    panel.add(txtRes);
+	    
+	    JButton btnAcceder = new JButton("Aceptar");
+		btnAcceder.setBorderPainted(false);
+		btnAcceder.setForeground(new Color(255, 255, 255));
+		btnAcceder.setBackground(new Color(130, 36, 55));
+		btnAcceder.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
+		btnAcceder.setBorder(new LineBorder(new Color(0, 189, 189), 5));
+		btnAcceder.setBounds(438, 524, 120, 30);
+		btnAcceder.setFocusable(false);
+		btnAcceder.addActionListener(new ActionListener()
+		{
+        	public void actionPerformed(ActionEvent e) {
+        		contentPane.removeAll();
+		        contentPane.revalidate();
+		        contentPane.repaint();
+		        menuPrincipal();
+			}});      
+		panel.add(btnAcceder);
+	    
+	    JLabel labelGrisV2 = new JLabel("");
+		labelGrisV2.setBackground(new Color(208, 205, 193));
+		labelGrisV2.setOpaque(true);
+		labelGrisV2.setBounds(183, 150, 630, 414);
+		panel.add(labelGrisV2);
+		
+		elementos();
+		imagenes();
+	}
 	public void recuperar() { //Recuperar contraseña
 		menuI_R_A();
 		contentPane.setLayout(new BorderLayout(0, 0));
