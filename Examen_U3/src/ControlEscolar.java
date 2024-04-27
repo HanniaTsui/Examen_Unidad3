@@ -97,7 +97,7 @@ public class ControlEscolar extends JFrame {
         selecFoto.setFileSelectionMode(JFileChooser.FILES_ONLY);
         selecFoto.addChoosableFileFilter(new FileNameExtensionFilter("png", "jpg"));
 		inicioSesion();
-     //   registrarDocente();
+   //    consultarDocente();
 
 	}
 	
@@ -416,6 +416,14 @@ public class ControlEscolar extends JFrame {
 		menuDocentes.add(itemD_3);
 		
 		JMenuItem itemD_4 = new JMenuItem("Consultar docente");
+		itemD_4.addActionListener(new ActionListener()	{
+        	public void actionPerformed(ActionEvent e) {
+        		contentPane.removeAll();
+		        contentPane.revalidate();
+		        contentPane.repaint();
+		        consultarDocente();
+        	}
+        });
 		menuDocentes.add(itemD_4);
 		
 		menuBar.add(Box.createVerticalStrut(8));
@@ -440,10 +448,16 @@ public class ControlEscolar extends JFrame {
 				for (int i = 0; i <= indiceUltimoAlumno; i++) {
 					datos[i][0] = String.valueOf(listaAlumnos[i].getMatricula());
 				}
-
+				
 				String[] titulo = {"Matriculas - Alumnos"};
+				DefaultTableModel modelo = new DefaultTableModel(datos, titulo) {
+		            @Override
+		            public boolean isCellEditable(int row, int column) {	              
+		                return false; //La tabla no se edita
+		            }
+			     };
 
-				JTable datosTabla = new JTable(datos, titulo);
+				JTable datosTabla = new JTable(modelo);
 
 				datosTabla.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 
@@ -481,9 +495,14 @@ public class ControlEscolar extends JFrame {
 				}
 
 				String[] titulo = {"Matriculas - Docentes"};
-
-				JTable datosTabla = new JTable(datos, titulo);
-
+				
+				DefaultTableModel modelo = new DefaultTableModel(datos, titulo) {
+		            @Override
+		            public boolean isCellEditable(int row, int column) {	              
+		                return false; //La tabla no se edita
+		            }
+			     };
+				JTable datosTabla = new JTable(modelo);
 				datosTabla.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 
 				JScrollPane tablaScroll = new JScrollPane(datosTabla);
@@ -629,6 +648,14 @@ public class ControlEscolar extends JFrame {
 		btn_6.setFocusable(false);
 		btn_6.setBackground(new Color(130, 36, 55));
 		btn_6.setBounds(530, 543, 140, 30);
+		btn_6.addActionListener(new ActionListener()	{
+        	public void actionPerformed(ActionEvent e) {
+        		contentPane.removeAll();
+		        contentPane.revalidate();
+		        contentPane.repaint();
+		        consultarDocente();
+        	}
+        });
 		panel.add(btn_6);
 		
 		btn_7 = new JButton("Eliminar docente");
@@ -1022,33 +1049,18 @@ public class ControlEscolar extends JFrame {
 	    labelCons.setBounds(102, 170, 687, 30);
 		panel.add(labelCons);
 		
-		JLabel labelID = new JLabel("ID del alumno: ", SwingConstants.LEFT);
-		labelID.setForeground(new Color(128, 0, 0));
-		labelID.setFont(new Font("Tahoma", Font.BOLD, 16));
-		labelID.setBounds(102, 212, 150, 13);
-		panel.add(labelID);
-		
-		
-		textID = new JTextField();
-		textID.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.BLACK), BorderFactory.createEmptyBorder(0, 5, 0, 0)));
-		textID.setBounds(102, 240, 228, 20);
-		panel.add(textID);
-		textID.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char l = e.getKeyChar();
-                if (!Character.isDigit(l)) {
-                    e.consume();
-                }
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-		});
-		textID.setColumns(10);
+	    lblAo = new JLabel("Año: ", SwingConstants.LEFT);
+		lblAo.setForeground(new Color(128, 0, 0));
+		lblAo.setVisible(false);
+	    lblAo.setFont(new Font("Tahoma", Font.BOLD, 16));
+	    lblAo.setBounds(102, 639, 180, 20);
+	    panel.add(lblAo);
+	    anio = new JTextField("");
+	    anio.setBounds(171, 639, 159, 20);
+	    anio.setVisible(false);
+	    anio.setFont(new Font("Tahoma", Font.BOLD, 16));
+	    panel.add(anio);
+	
 		elementosLabels();
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(400, 240, 130, 21);
@@ -1157,6 +1169,169 @@ public class ControlEscolar extends JFrame {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		elementosV2();
+	}
+	
+	public void consultarDocente() {
+		panel = new JPanel();      
+		panel.setLayout(null);
+		panel.setBackground(new Color(82, 24, 37));
+	    panel.setPreferredSize(new Dimension(862, 800)); 
+	    menuVertical();
+	    
+	    JLabel logoP = new JLabel();
+	    logoP.setVisible(false);
+	    logoP.setIcon(new ImageIcon(getClass().getResource("perfil.png")));
+	    logoP.setBounds(643,290,115,130);
+	    panel.add(logoP);
+	    
+	    JLabel logo = new JLabel(); 
+	    logo.setIcon(new ImageIcon(getClass().getResource("escudo.png")));
+	    logo.setBounds(643,535,115,130);
+	    panel.add(logo);
+	    
+	    JLabel  labelCons= new JLabel("Consultar docente");
+	    labelCons.setVerticalAlignment(SwingConstants.TOP);
+	    labelCons.setForeground(new Color(0, 0, 0));
+	    labelCons.setFont(new Font("Tahoma", Font.BOLD, 20));
+	    labelCons.setBounds(102, 170, 687, 30);
+		panel.add(labelCons);
+		
+		elementosLabels();
+		labelGrado = new JLabel("Grado: *");
+	    labelGrado.setForeground(new Color(128, 0, 0));
+	    labelGrado.setFont(new Font("Tahoma", Font.BOLD, 16));
+	    labelGrado.setBounds(102, 639, 180, 20); labelGrado.setVisible(false);
+	    panel.add(labelGrado);
+	    
+	    lblCasa = new JLabel("Asignatura: *", SwingConstants.LEFT);
+	    lblCasa.setForeground(new Color(128, 0, 0));
+	    lblCasa.setFont(new Font("Tahoma", Font.BOLD, 16)); lblCasa.setVisible(false);
+	    lblCasa.setBounds(102, 690, 180, 20);
+	    panel.add(lblCasa);
+	    
+	    comboGrado = new JComboBox();
+	    comboGrado.setModel(new DefaultComboBoxModel(new String[] {"  ", "Media Superior", "Licenciatura\t","Maestria\t", "Doctorado\t"}));
+	    comboGrado.setBounds(185, 639, 145, 21);
+	    comboGrado.setVisible(false);
+	    panel.add(comboGrado);
+	    
+	    comboMateria = new JComboBox();
+	    comboMateria.setModel(new DefaultComboBoxModel(new String[] {"  ", "Transformaciones","Historia de la magia", "Herbología", "Pociones\t", "Encantamientos", "Astronomia"}));
+	    comboMateria.setBounds(225, 690, 225, 20); comboMateria.setVisible(false);
+	    panel.add(comboMateria);
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(400, 240, 130, 21);
+		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnBuscar.setForeground(new Color(255, 255, 255));
+		btnBuscar.setBackground(new Color(130, 36, 55));
+		btnBuscar.setFocusable(false);
+		btnBuscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	String id = textID.getText();
+            	boolean matriculaEncontrada = false;
+            	if (id.length()<=0)
+				{
+            		JOptionPane.showMessageDialog(null, "Por favor ingrese una matrícula", "Error", JOptionPane.WARNING_MESSAGE);
+					textID.setBorder(BorderFactory.createLineBorder(Color.RED));	
+				} else {
+					 textID.setBorder(null);
+				}
+            	for (int i = 0; i <= indiceUltimoDocente; i++) {
+            	    if (listaDocente[i].getMatricula() == Integer.parseInt(id)) {
+                    nombre.setText(listaDocente[i].getNombres());
+                    apellido.setText(listaDocente[i].getApellidos());
+                    email.setText(listaDocente[i].getEmail());
+                    tel.setText(listaDocente[i].getTelefono());
+                    fecha.setText(listaDocente[i].getFechaNacimiento());
+                    pais.setText(listaDocente[i].getPaisNacimiento());
+                    comboCasa.setSelectedItem(listaDocente[i].getCasa());
+                    comboGener.setSelectedItem(listaDocente[i].getGenero());  
+                    comboMateria.setSelectedItem(listaDocente[i].getMateria());
+                    comboGrado.setSelectedItem(listaDocente[i].getGrado());
+                  
+                    textID.setEnabled(false);
+            		btnBuscar.setVisible(false);
+            		btnConsNuevo.setVisible(true);
+            		btnDescargar.setVisible(true);
+            		logoP.setVisible(true); lblCasa.setVisible(true); lblTelfono.setVisible(true);lblPais.setVisible(true); lblFecha.setVisible(true); labelGrado.setVisible(true);
+            		lblCorreoElectr.setVisible(true);  comboGener.setVisible(true); lblGenero.setVisible(true); labelIDA.setVisible(true); labelPS.setVisible(true);	 comboGrado.setVisible(true);  comboMateria.setVisible(true);
+                    nombre.setVisible(true);  apellido.setVisible(true); email.setVisible(true); tel.setVisible(true); fecha.setVisible(true); pais.setVisible(true);   comboCasa.setVisible(true);  comboGener.setVisible(true);
+                    nombre.setFocusable(false); nombre.setOpaque(false); nombre.setBorder(null);   apellido.setFocusable(false); apellido.setOpaque(false); apellido.setBorder(null);
+                    email.setFocusable(false); email.setOpaque(false); email.setBorder(null);tel.setFocusable(false); tel.setOpaque(false); tel.setBorder(null);
+                    fecha.setFocusable(false); fecha.setOpaque(false); fecha.setBorder(null);pais.setFocusable(false); pais.setOpaque(false); pais.setBorder(null);
+                    comboCasa.setEnabled(false);  comboGener.setEnabled(false); comboGrado.setEnabled(false); comboMateria.setEnabled(false); 
+                    
+                    String rutaFoto = listaDocente[i].getRutaFoto();
+                    if (rutaFoto != null && !rutaFoto.isEmpty()) {
+                        ImageIcon fotoDocente = new ImageIcon(rutaFoto);
+                        logoP.setIcon(fotoDocente);
+                    } else {
+                    	logoPerfil.setIcon(new ImageIcon(getClass().getResource("perfil.png")));
+                    }
+                    matriculaEncontrada = true;
+                    break;
+            	    }    
+            	} if(!matriculaEncontrada) {
+					JOptionPane.showMessageDialog(null, "ID de alumno no encontrado","Error", JOptionPane.WARNING_MESSAGE);
+				}
+
+                panel.revalidate();
+                panel.repaint();
+            }
+        });
+        panel.add(btnBuscar);
+        
+        btnConsNuevo = new JButton("Consultar Nuevo");
+        btnConsNuevo.setBounds(600, 240, 130, 21);
+        btnConsNuevo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnConsNuevo.setForeground(new Color(255, 255, 255));
+        btnConsNuevo.setBackground(new Color(130, 36, 55));
+        btnConsNuevo.setFocusable(false);
+        btnConsNuevo.setVisible(false);
+        btnConsNuevo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textID.setText("");   textID.setEnabled(true);
+                btnConsNuevo.setVisible(false);
+                btnDescargar.setVisible(false);
+                btnBuscar.setVisible(true);
+                logoP.setVisible(false); lblCasa.setVisible(false); lblTelfono.setVisible(false);lblPais.setVisible(false); lblFecha.setVisible(false); labelGrado.setVisible(false);
+        		lblCorreoElectr.setVisible(false);  comboGener.setVisible(false); lblGenero.setVisible(false); labelIDA.setVisible(false); labelPS.setVisible(false);
+        		nombre.setVisible(false);apellido.setVisible(false);email.setVisible(false);tel.setVisible(false);fecha.setVisible(false);pais.setVisible(false);comboCasa.setVisible(false); comboGrado.setVisible(false); comboMateria.setVisible(false);
+                panel.revalidate();
+                panel.repaint();
+            }
+        });
+        panel.add(btnConsNuevo);
+        
+        btnDescargar = new JButton("Descargar");
+        btnDescargar.setBounds(400, 240, 130, 21);
+        btnDescargar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnDescargar.setForeground(new Color(255, 255, 255));
+        btnDescargar.setBackground(new Color(130, 36, 55));
+        btnDescargar.setFocusable(false);
+        btnDescargar.setVisible(false);
+        btnDescargar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnDescargar.setVisible(true);
+                JOptionPane.showInternalMessageDialog(null, "Su descarga ha sido exitosa", "Descarga exitosa", JOptionPane.INFORMATION_MESSAGE);
+                panel.revalidate();
+                panel.repaint();
+            }
+        });
+        panel.add(btnDescargar);
+
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		labelGrisV2 = new JLabel("");	labelGrisV2.setBackground(new Color(208, 205, 193));labelGrisV2.setOpaque(true);labelGrisV2.setBounds(58, 150, 750, 580);
+		panel.add(labelGrisV2);
+		elementosV2();
+		
+		
 	}
 	
 	public void perfil()
@@ -1514,26 +1689,17 @@ public class ControlEscolar extends JFrame {
 	    logo.setBounds(643,535,115,130);
 	    panel.add(logo);
 	    
-		textID = new JTextField();
-		textID.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.BLACK), BorderFactory.createEmptyBorder(0, 5, 0, 0)));
-		textID.setBounds(102, 240, 228, 20);
-		panel.add(textID);
-		textID.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char l = e.getKeyChar();
-                if (!Character.isDigit(l)) {
-                    e.consume();
-                }
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-		});
-		textID.setColumns(10);
+	    lblAo = new JLabel("Año: ", SwingConstants.LEFT);
+	    lblAo.setForeground(new Color(128, 0, 0));
+	    lblAo.setVisible(false);
+	    lblAo.setFont(new Font("Tahoma", Font.BOLD, 16));
+	    lblAo.setBounds(102, 639, 180, 20);
+	    panel.add(lblAo);
+	    anio = new JTextField("");
+	    anio.setBounds(171, 639, 159, 20);
+	    anio.setVisible(false);
+	    anio.setFont(new Font("Tahoma", Font.BOLD, 16));
+	    panel.add(anio);
 		
 		elementosLabels();
 		
@@ -1686,6 +1852,27 @@ public class ControlEscolar extends JFrame {
 		labelID.setBounds(102, 212, 150, 13);
 		panel.add(labelID);
 		
+		textID = new JTextField();
+		textID.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.BLACK), BorderFactory.createEmptyBorder(0, 5, 0, 0)));
+		textID.setBounds(102, 240, 228, 20);
+		panel.add(textID);
+		textID.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char l = e.getKeyChar();
+                if (!Character.isDigit(l)) {
+                    e.consume();
+                }
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+		});
+		textID.setColumns(10);
+		
 		lblCasa = new JLabel("Casa: ", SwingConstants.LEFT);
 	    lblCasa.setForeground(new Color(128, 0, 0));
 	    lblCasa.setVisible(false);
@@ -1693,12 +1880,6 @@ public class ControlEscolar extends JFrame {
 	    lblCasa.setBounds(350, 639, 180, 20);
 	    panel.add(lblCasa);
 	    
-	    lblAo = new JLabel("Año: ", SwingConstants.LEFT);
-	    lblAo.setForeground(new Color(128, 0, 0));
-	    lblAo.setVisible(false);
-	    lblAo.setFont(new Font("Tahoma", Font.BOLD, 16));
-	    lblAo.setBounds(102, 639, 180, 20);
-	    panel.add(lblAo);
 	    
 	    lblTelfono = new JLabel("Teléfono: ", SwingConstants.LEFT);
 		lblTelfono.setForeground(new Color(128, 0, 0));
@@ -1722,7 +1903,7 @@ public class ControlEscolar extends JFrame {
 	    lblCorreoElectr.setVisible(false);
 	    panel.add(lblCorreoElectr);
 	    
-	    lblGenero = new JLabel("Genero: ", SwingConstants.LEFT);
+	    lblGenero = new JLabel("Género: ", SwingConstants.LEFT);
 	    lblGenero.setForeground(new Color(128, 0, 0));
 	    lblGenero.setVisible(false);
 	    lblGenero.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -1751,12 +1932,6 @@ public class ControlEscolar extends JFrame {
 		comboCasa.setVisible(false);
 	    panel.add(comboCasa);
 	    
-	    anio = new JTextField("");
-	    anio.setBounds(171, 639, 159, 20);
-	    anio.setVisible(false);
-	    anio.setFont(new Font("Tahoma", Font.BOLD, 16));
-	    panel.add(anio);
-		
 	    tel= new JTextField ("");
 		tel.setVisible(false);
 		tel.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -1913,7 +2088,7 @@ public class ControlEscolar extends JFrame {
 	    comboCasa.setBounds(419, 552, 159, 20);
 	    panel.add(comboCasa);
 	    
-	    lblGenero = new JLabel("Genero: *", SwingConstants.LEFT);
+	    lblGenero = new JLabel("Género: *", SwingConstants.LEFT);
 	    lblGenero.setForeground(new Color(128, 0, 0));
 	    lblGenero.setFont(new Font("Tahoma", Font.BOLD, 16));
 	    lblGenero.setBounds(102, 344, 180, 20);
@@ -2206,7 +2381,7 @@ public class ControlEscolar extends JFrame {
                 btnGuardar.setEnabled(true); 
                 btnFoto.setEnabled(true);
                 textNombres.setFocusable(true);textApellidos.setFocusable(true); textEmail.setFocusable(true); textTel.setFocusable(true);textFecha.setFocusable(true);textPais.setFocusable(true);comboCasa.setEnabled(true); comboGener.setEnabled(true);
-                btnRegistrarNuevo.setVisible(false);
+                btnRegistrarNuevo.setVisible(false); comboMateria.setEnabled(true);comboGrado.setEnabled(true);
                 panel.revalidate();
                 panel.repaint();
             }
@@ -2221,5 +2396,3 @@ public class ControlEscolar extends JFrame {
 		panel.add(labelGrisV2);
 	}
 }
-
-
