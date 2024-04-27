@@ -8,7 +8,6 @@ public class Docente {
     private String telefono;
     private String paisNacimiento;
     private String email;
-    private int anio;
     private String casa;
     private String genero;
 	private String rutaFoto;
@@ -17,8 +16,7 @@ public class Docente {
 
 	// Constructor
     public Docente(int matricula, String nombres, String apellidos, String fechaNacimiento,
-                  String telefono, String paisNacimiento, String email, int anio,
-                  String casa, String genero) {
+                  String telefono, String paisNacimiento, String email, String casa, String genero, String grado, String materia, String ruta) {
         this.matricula = matricula;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -26,12 +24,14 @@ public class Docente {
         this.telefono = telefono;
         this.paisNacimiento = paisNacimiento;
         this.email = email;
-        this.anio = anio;
         this.casa = casa;
         this.genero = genero;
+        this.grado = grado;
+        this.materia= materia; 
+        this.rutaFoto=ruta; 
     }
-    
-    public Docente() {
+
+	public Docente() {
         this.matricula = 0;
         this.nombres = "";
         this.apellidos = "";
@@ -39,7 +39,6 @@ public class Docente {
         this.telefono = "";
         this.paisNacimiento = "";
         this.email = "";
-        this.anio = 0;
         this.casa = "";
         this.genero = "";
     }
@@ -98,14 +97,6 @@ public class Docente {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public int getAnio() {
-		return anio;
-	}
-
-	public void setAnio(int anio) {
-		this.anio = anio;
 	}
 
 	public String getCasa() {

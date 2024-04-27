@@ -16,7 +16,7 @@ public class Alumno {
     // Constructor
     public Alumno(int matricula, String nombres, String apellidos, String fechaNacimiento,
                   String telefono, String paisNacimiento, String email, int anio,
-                  String casa, String genero) {
+                  String casa, String genero, String ruta) {
         this.matricula = matricula;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -27,6 +27,7 @@ public class Alumno {
         this.anio = anio;
         this.casa = casa;
         this.genero = genero;
+        this.rutaFoto = ruta; 
     }
 
     public Alumno() {
