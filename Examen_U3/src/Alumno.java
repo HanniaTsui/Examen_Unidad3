@@ -8,14 +8,14 @@ public class Alumno {
     private String telefono;
     private String paisNacimiento;
     private String email;
-    private int anio;
+    private String anio;
     private String casa;
     private String genero;
     private String rutaFoto;
 
     // Constructor
     public Alumno(int matricula, String nombres, String apellidos, String fechaNacimiento,
-                  String telefono, String paisNacimiento, String email, int anio,
+                  String telefono, String paisNacimiento, String email, String anio,
                   String casa, String genero, String ruta) {
         this.matricula = matricula;
         this.nombres = nombres;
@@ -38,7 +38,7 @@ public class Alumno {
         this.telefono = "";
         this.paisNacimiento = "";
         this.email = "";
-        this.anio = 0;
+        this.anio = "";
         this.casa = "";
         this.genero = "";
     }
@@ -104,11 +104,11 @@ public class Alumno {
 		this.email = email;
 	}
 
-	public int getAnio() {
+	public String getAnio() {
 		return anio;
 	}
 
-	public void setAnio(int anio) {
+	public void setAnio(String anio) {
 		this.anio = anio;
 	}
 
