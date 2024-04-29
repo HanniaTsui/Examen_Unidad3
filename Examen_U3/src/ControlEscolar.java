@@ -112,13 +112,10 @@ public class ControlEscolar extends JFrame {
 		item1.setOpaque(false);
 		item1.addActionListener(new ActionListener()	{
         	public void actionPerformed(ActionEvent e) {
-        		quitarComponentes();
-		        inicioSesion();
-		        if(sesionIniciada)
-		        {
-		        	nombres.setText("Yo");
-		        	password.setText("123");
-		        }
+        		if(sesionIniciada)  {
+		        	quitarComponentes();
+		        	menuPrincipal();
+		        } 
         	}
         });
 		menu.add(item1);		
@@ -260,7 +257,7 @@ public class ControlEscolar extends JFrame {
 		elementos();	
 		imagenes();
 	}
-	public void menuI_R_A() { //Menu inicio, recuperar, acceder
+	public void menuI_R_A() { //Menu recuperar, acceder
 		contentPane.setLayout(new BorderLayout(0, 0));
 		panelMenu = new JPanel();
 		panelMenu.setBackground(new Color(199, 146, 66));
@@ -270,21 +267,7 @@ public class ControlEscolar extends JFrame {
 		JMenuBar menu = new JMenuBar();
 		menu.setOpaque(false); menu.setBorder(null);	menu.setBounds(0, 0, 240, 22);
 		panelMenu.add(menu);
-		
-		JMenuItem item1 = new JMenuItem("Inicio");
-		item1.setOpaque(false);
-		item1.setHorizontalAlignment(SwingConstants.CENTER);
-		item1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		quitarComponentes();;
-		        inicioSesion();
-		        if(sesionIniciada)  {
-		        	nombres.setText("Yo");
-		        	password.setText("123");
-		        } 	
-        	}
-        });
-		menu.add(item1);
+
 		
 		JMenuItem item2 = new JMenuItem("Recuperar contraseña");
 		item2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -905,6 +888,7 @@ public class ControlEscolar extends JFrame {
                 btnConsNuevo.setVisible(false);
                 btnDescargar.setVisible(false);
                 btnBuscar.setVisible(true);
+                desactivarBoton();
                 componentesConsultarV2(); 
                 logoP.setVisible(false);  lblAo.setVisible(false);  comboAnio.setVisible(false);
                 panel.revalidate();
@@ -1044,6 +1028,7 @@ public class ControlEscolar extends JFrame {
                 btnConsNuevo.setVisible(false);
                 btnDescargar.setVisible(false);
                 btnBuscar.setVisible(true);
+                desactivarBoton();
                 componentesConsultarV2();
                 logoP.setVisible(false); labelGrado.setVisible(false); comboGrado.setVisible(false); comboMateria.setVisible(false);lblAsignatura.setVisible(false);
                 panel.revalidate();
@@ -1361,6 +1346,7 @@ public class ControlEscolar extends JFrame {
                 textID.setText("");  textID.setEnabled(true);
                 panel.remove(btnConsNuevo);
                 btnBuscar.setVisible(true);
+                desactivarBoton();
                 lbConfirmacion.setVisible(false);
                 panel.revalidate();
                 panel.repaint();
@@ -1473,6 +1459,7 @@ public class ControlEscolar extends JFrame {
                 textID.setText(""); 
                 textID.setEnabled(true);
                 panel.remove(btnConsNuevo);
+                desactivarBoton();
                 btnBuscar.setVisible(true);
                 lbConfirmacion.setVisible(false);
                 panel.revalidate();
@@ -1609,6 +1596,7 @@ public class ControlEscolar extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
             	componentesEditarV3(); btnActualizar.setVisible(false);  logoP.setVisible(false); lblAo.setVisible(false);comboAnio.setVisible(false);
+            	desactivarBoton();
             	panel.revalidate();
                 panel.repaint();
             }
@@ -1777,7 +1765,7 @@ public class ControlEscolar extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
             	componentesEditarV3(); btnActualizar.setVisible(false);  logoP.setVisible(false); comboGrado.setEnabled(true);comboMateria.setEnabled(true);comboGrado.setVisible(false);comboMateria.setVisible(false);       	
-            	lblAsignatura.setVisible(false); labelGrado.setVisible(false);
+            	lblAsignatura.setVisible(false); labelGrado.setVisible(false); desactivarBoton();
             	panel.revalidate();
                 panel.repaint();
             }
@@ -2538,7 +2526,6 @@ public class ControlEscolar extends JFrame {
             }
         });
         panel.add(btnRegistrarNuevo);
-		
 		elementosV2();
 		labelGrisDocente();
 	}
